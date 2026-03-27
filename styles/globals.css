@@ -832,3 +832,438 @@ header {
 .conn-result-dot[data-color="green"]  { background: var(--conn-green);  }
 .conn-result-dot[data-color="blue"]   { background: var(--conn-blue);   }
 .conn-result-dot[data-color="purple"] { background: var(--conn-purple); }
+
+/* ─── Strands ────────────────────────────────────────── */
+:root {
+  --strands-theme-color: #6aade4;
+  --strands-spangram-color: #f7c842;
+  --strands-selected-color: #c4e4f4;
+  --strands-cell-size: 52px;
+}
+
+.strands-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 340px;
+  gap: 12px;
+}
+
+.strands-theme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.strands-theme-label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.strands-theme-text {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.strands-found-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.strands-found-badge {
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--border);
+  color: var(--text-muted);
+  transition: background 0.3s, color 0.3s;
+}
+
+.strands-found-badge.found {
+  background: var(--strands-theme-color);
+  color: #1a1a1b;
+}
+
+.strands-found-badge.spangram.found {
+  background: var(--strands-spangram-color);
+  color: #1a1a1b;
+}
+
+.strands-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  user-select: none;
+}
+
+.strands-row {
+  display: flex;
+  gap: 4px;
+}
+
+.strands-cell {
+  width: var(--strands-cell-size);
+  height: var(--strands-cell-size);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.strands-cell.selected {
+  background: var(--strands-selected-color);
+  border-color: var(--strands-theme-color);
+  transform: scale(1.08);
+}
+
+.strands-cell.last {
+  background: #b0d8f0;
+  border-color: #4a9fd4;
+}
+
+.strands-cell.found {
+  background: var(--strands-theme-color);
+  border-color: var(--strands-theme-color);
+  color: #1a1a1b;
+}
+
+.strands-cell.spangram {
+  background: var(--strands-spangram-color);
+  border-color: var(--strands-spangram-color);
+  color: #1a1a1b;
+}
+
+.strands-selection {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strands-selection-word {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.strands-just-found {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--strands-theme-color);
+  color: #1a1a1b;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 16px 32px;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 80;
+  animation: strands-pop 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.strands-just-found.spangram {
+  background: var(--strands-spangram-color);
+}
+
+@keyframes strands-pop {
+  from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Strands help */
+.strands-help-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.strands-help-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.strands-help-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.theme-icon {
+  background: var(--strands-theme-color);
+  color: #1a1a1b;
+}
+
+.spangram-icon {
+  background: var(--strands-spangram-color);
+  color: #1a1a1b;
+}
+
+@media (max-width: 380px) {
+  :root { --strands-cell-size: 46px; }
+  .strands-cell { font-size: 1rem; }
+}
+
+/* ─── Squareword ─────────────────────────────────────── */
+.sq-board {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 360px;
+  gap: 6px;
+}
+
+.sq-word-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sq-word-row.solved .sq-tile {
+  background: var(--tile-correct) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+.sq-word-number {
+  width: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sq-tiles {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.sq-tile {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 52px;
+  max-height: 52px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  user-select: none;
+  border-radius: 4px;
+}
+
+.sq-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 2px solid var(--border);
+}
+
+.sq-input-label {
+  width: 20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sq-input-tile {
+  border-color: var(--border);
+  background: var(--tile-empty-bg);
+}
+
+.sq-input-tile.filled {
+  border-color: #878a8c;
+  animation: tile-pop 0.1s ease;
+}
+
+.sq-guess-counter {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Waffle ─────────────────────────────────────────── */
+:root {
+  --waffle-green: #6aaa64;
+  --waffle-yellow: #c9b458;
+  --waffle-white: #efefe6;
+  --waffle-cell-size: 58px;
+  --waffle-gap: 6px;
+}
+
+.waffle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.waffle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--waffle-gap);
+}
+
+.waffle-row {
+  display: flex;
+  gap: var(--waffle-gap);
+}
+
+.waffle-cell {
+  width: var(--waffle-cell-size);
+  height: var(--waffle-cell-size);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.waffle-empty {
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+.waffle-letter {
+  cursor: pointer;
+  border: none;
+  font-family: var(--font);
+  transition: transform 0.1s, box-shadow 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.waffle-letter:not(:disabled):hover {
+  filter: brightness(0.9);
+}
+
+.waffle-letter:active {
+  transform: scale(0.95);
+}
+
+.waffle-green  { background: var(--waffle-green);  color: #fff; }
+.waffle-yellow { background: var(--waffle-yellow); color: #fff; }
+.waffle-white  { background: var(--waffle-white);  color: var(--text); }
+
+.waffle-locked { cursor: default; }
+
+.waffle-selected {
+  box-shadow: 0 0 0 3px var(--text);
+  transform: scale(1.08);
+  z-index: 1;
+  position: relative;
+}
+
+.waffle-swaps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.waffle-swaps-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 200px;
+}
+
+.waffle-swap-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5a594e;
+  transition: background 0.2s;
+}
+
+.waffle-swap-dot.used {
+  background: var(--border);
+}
+
+.waffle-swaps-count {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.waffle-stars {
+  font-size: 1.5rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* Waffle help */
+.waffle-help-colors {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.waffle-help-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.waffle-help-cell {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 1rem !important;
+  flex-shrink: 0;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+@media (max-width: 380px) {
+  :root { --waffle-cell-size: 50px; --waffle-gap: 4px; }
+  .waffle-cell { font-size: 1.25rem; }
+}
