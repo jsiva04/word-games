@@ -1,6 +1,6 @@
 import { ConnectionsGame } from '@/components/connections/ConnectionsGame';
 
-export const metadata = { title: 'Connections — Word Games' };
+export const metadata = { title: 'Connections' };
 
 export default function ConnectionsPage() {
   return <ConnectionsGame />;

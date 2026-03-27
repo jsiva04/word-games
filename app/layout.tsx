@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Word Games',
+  title: 'Kesh\'s Word Games',
   description: 'Daily word puzzle games — Wordle and Connections',
 };
 
