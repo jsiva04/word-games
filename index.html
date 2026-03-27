@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Word Games</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────── -->
+<header>
+  <div class="header-left">
+    <!-- hamburger injected by nav.js -->
+  </div>
+
+  <div class="header-title" id="header-title">Wordle</div>
+
+  <div class="header-right">
+    <!-- Wordle action buttons -->
+    <div id="wordle-header-btns">
+      <button class="icon-btn" id="help-btn" aria-label="How to play">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="stats-btn" aria-label="Statistics">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6"  y1="20" x2="6"  y2="14"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Connections action buttons (hidden until active) -->
+    <div id="conn-header-btns" style="display:none;">
+      <button class="icon-btn" id="conn-help-btn" aria-label="How to play">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="conn-stats-btn" aria-label="Statistics">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6"  y1="20" x2="6"  y2="14"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Toast ─────────────────────────────────────────────────────────────── -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     WORDLE VIEW
+═══════════════════════════════════════════════════════════════════════════ -->
+<main id="wordle-view" class="view active">
+  <div class="game">
+
+    <div class="board-container">
+      <div id="board" class="board" role="grid" aria-label="Wordle game board"></div>
+    </div>
+
+    <div class="keyboard" role="group" aria-label="Keyboard">
+      <div class="key-row">
+        <button class="key" data-key="q">Q</button>
+        <button class="key" data-key="w">W</button>
+        <button class="key" data-key="e">E</button>
+        <button class="key" data-key="r">R</button>
+        <button class="key" data-key="t">T</button>
+        <button class="key" data-key="y">Y</button>
+        <button class="key" data-key="u">U</button>
+        <button class="key" data-key="i">I</button>
+        <button class="key" data-key="o">O</button>
+        <button class="key" data-key="p">P</button>
+      </div>
+      <div class="key-row">
+        <button class="key" data-key="a">A</button>
+        <button class="key" data-key="s">S</button>
+        <button class="key" data-key="d">D</button>
+        <button class="key" data-key="f">F</button>
+        <button class="key" data-key="g">G</button>
+        <button class="key" data-key="h">H</button>
+        <button class="key" data-key="j">J</button>
+        <button class="key" data-key="k">K</button>
+        <button class="key" data-key="l">L</button>
+      </div>
+      <div class="key-row">
+        <button class="key wide" data-key="ENTER">Enter</button>
+        <button class="key" data-key="z">Z</button>
+        <button class="key" data-key="x">X</button>
+        <button class="key" data-key="c">C</button>
+        <button class="key" data-key="v">V</button>
+        <button class="key" data-key="b">B</button>
+        <button class="key" data-key="n">N</button>
+        <button class="key" data-key="m">M</button>
+        <button class="key wide" data-key="DELETE" aria-label="Delete">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+            <line x1="18" y1="9" x2="12" y2="15"/>
+            <line x1="12" y1="9" x2="18" y2="15"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CONNECTIONS VIEW
+═══════════════════════════════════════════════════════════════════════════ -->
+<main id="connections-view" class="view">
+  <div class="conn-game">
+
+    <p class="conn-instructions">Create four groups of four — <span id="conn-puzzle-num"></span></p>
+
+    <div id="conn-board" class="conn-board"></div>
+
+    <div class="conn-controls">
+      <div class="conn-mistakes">
+        Mistakes remaining
+        <div class="conn-mistake-dots">
+          <div class="conn-dot" id="conn-dot-0"></div>
+          <div class="conn-dot" id="conn-dot-1"></div>
+          <div class="conn-dot" id="conn-dot-2"></div>
+          <div class="conn-dot" id="conn-dot-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conn-controls">
+      <button class="conn-btn" id="conn-shuffle">Shuffle</button>
+      <button class="conn-btn" id="conn-deselect" disabled>Deselect all</button>
+      <button class="conn-btn primary" id="conn-submit" disabled>Submit</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     WORDLE MODALS
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="help-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="help-title">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="help-title">How to play</span>
+      <button class="modal-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="help-section">
+      <p>Guess the <strong>Wordle</strong> in 6 tries.</p>
+      <p>Each guess must be a valid 5-letter word. The color of the tiles will change to show how close your guess was.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="help-examples">
+      <div class="help-example">
+        <div class="help-tiles">
+          <div class="help-tile correct">W</div>
+          <div class="help-tile">E</div>
+          <div class="help-tile">A</div>
+          <div class="help-tile">R</div>
+          <div class="help-tile">Y</div>
+        </div>
+        <p><strong>W</strong> is in the word and in the correct spot.</p>
+      </div>
+      <div class="help-example">
+        <div class="help-tiles">
+          <div class="help-tile">P</div>
+          <div class="help-tile present">I</div>
+          <div class="help-tile">L</div>
+          <div class="help-tile">L</div>
+          <div class="help-tile">S</div>
+        </div>
+        <p><strong>I</strong> is in the word but in the wrong spot.</p>
+      </div>
+      <div class="help-example">
+        <div class="help-tiles">
+          <div class="help-tile">V</div>
+          <div class="help-tile">A</div>
+          <div class="help-tile">G</div>
+          <div class="help-tile absent">U</div>
+          <div class="help-tile">E</div>
+        </div>
+        <p><strong>U</strong> is not in the word in any spot.</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;">A new Wordle is available each day.</p>
+  </div>
+</div>
+
+<div id="stats-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="stats-title">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="stats-title">Statistics</span>
+      <button class="modal-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-value" id="stat-played">0</div><div class="stat-label">Played</div></div>
+      <div class="stat-item"><div class="stat-value" id="stat-winpct">0</div><div class="stat-label">Win %</div></div>
+      <div class="stat-item"><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Current Streak</div></div>
+      <div class="stat-item"><div class="stat-value" id="stat-maxstreak">0</div><div class="stat-label">Max Streak</div></div>
+    </div>
+    <div class="divider"></div>
+    <div id="guess-distribution" class="guess-distribution"></div>
+    <div class="divider"></div>
+    <div id="share-section" class="result-section" style="display:none;">
+      <div>
+        <div class="countdown-label">Next Wordle</div>
+        <div class="countdown" id="countdown">00:00:00</div>
+      </div>
+      <button class="share-btn" id="share-btn">Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CONNECTIONS MODALS
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="conn-help-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">How to play</span>
+      <button class="modal-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="help-section">
+      <p>Find four groups of four words that share something in common.</p>
+      <p>Select four words and tap <strong>Submit</strong> to check your answer. You have <strong>4 mistakes</strong> before the game ends.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="help-section">
+      <p>Categories are color-coded by difficulty:</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;"><div style="width:18px;height:18px;border-radius:4px;background:var(--conn-yellow);flex-shrink:0;"></div><span>Straightforward</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;"><div style="width:18px;height:18px;border-radius:4px;background:var(--conn-green);flex-shrink:0;"></div><span>Medium</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;"><div style="width:18px;height:18px;border-radius:4px;background:var(--conn-blue);flex-shrink:0;"></div><span>Tricky</span></div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;"><div style="width:18px;height:18px;border-radius:4px;background:var(--conn-purple);flex-shrink:0;"></div><span>Very tricky</span></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;">A new puzzle is available each day.</p>
+  </div>
+</div>
+
+<div id="conn-stats-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Statistics</span>
+      <button class="modal-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-value" id="conn-stat-played">0</div><div class="stat-label">Played</div></div>
+      <div class="stat-item"><div class="stat-value" id="conn-stat-winpct">0</div><div class="stat-label">Win %</div></div>
+      <div class="stat-item"><div class="stat-value" id="conn-stat-streak">0</div><div class="stat-label">Current Streak</div></div>
+      <div class="stat-item"><div class="stat-value" id="conn-stat-maxstreak">0</div><div class="stat-label">Max Streak</div></div>
+    </div>
+    <div class="divider"></div>
+    <div id="conn-result-grid" class="conn-result-grid"></div>
+    <div class="divider"></div>
+    <div id="conn-share-section" class="result-section" style="display:none;">
+      <div>
+        <div class="countdown-label">Next Puzzle</div>
+        <div class="countdown" id="conn-countdown">00:00:00</div>
+      </div>
+      <button class="share-btn" id="conn-share-btn">Share</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Scripts ────────────────────────────────────────────────────────────── -->
+<script src="nav.js"></script>
+<script src="words.js"></script>
+<script src="connections-data.js"></script>
+<script src="wordle.js"></script>
+<script src="connections.js"></script>
+</body>
+</html>
