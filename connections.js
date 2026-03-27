@@ -206,7 +206,7 @@ function handleTileClick(state, puzzle, word) {
 }
 
 // ─── Submit guess ─────────────────────────────────────────────────────────────
-function submitGuess(state, puzzle) {
+function submitConnectionsGuess(state, puzzle) {
   if (state.selected.length !== 4 || state.gameOver) return;
 
   var sel = state.selected.slice();
@@ -412,7 +412,7 @@ function initConnections() {
 
   // Submit
   document.getElementById('conn-submit').addEventListener('click', function() {
-    submitGuess(state, puzzle);
+    submitConnectionsGuess(state, puzzle);
   });
 
   // Shuffle

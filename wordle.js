@@ -29,6 +29,7 @@ function getDefaultState(word) {
     gameOver: false,
     won: false,
     dayIndex: getTodayIndex(),
+    animating: false,
   };
 }
 
@@ -37,8 +38,18 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const saved = JSON.parse(raw);
-    if (saved.dayIndex === getTodayIndex()) return saved;
-  } catch {}
+    if (saved.dayIndex === getTodayIndex()) {
+      // Ensure critical fields are always valid
+      saved.animating = false;
+      saved.gameOver = saved.gameOver || false;
+      saved.won = saved.won || false;
+      saved.currentGuess = (saved.currentGuess || '').toLowerCase();
+      saved.guesses = Array.isArray(saved.guesses) ? saved.guesses : [];
+      return saved;
+    }
+  } catch (e) {
+    console.error('Error loading state:', e);
+  }
   return null;
 }
 
@@ -238,7 +249,7 @@ function handleKey(state, key) {
   }
 
   if (key === 'Enter' || key === 'ENTER') {
-    submitGuess(state);
+    submitWordleGuess(state);
     return;
   }
 
@@ -248,7 +259,7 @@ function handleKey(state, key) {
   }
 }
 
-function submitGuess(state) {
+function submitWordleGuess(state) {
   const guess = state.currentGuess;
 
   if (guess.length < WORD_LENGTH) {
