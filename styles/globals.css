@@ -37,6 +37,33 @@
   --conn-green:   #a0c35a;
   --conn-blue:    #b0c4ef;
   --conn-purple:  #ba81c5;
+
+  /* Shared unplayed-tile color (Connections + Waffle) */
+  --tile-unplayed: #efefe6;
+  --tile-unplayed-hover: #ddddd4;
+}
+
+[data-theme="dark"] {
+  --bg: #121213;
+  --surface: #1a1a1b;
+  --border: #3a3a3c;
+  --text: #ffffff;
+  --text-muted: #818384;
+
+  --tile-empty-bg: #121213;
+  --tile-filled-bg: #121213;
+  --tile-correct: #538d4e;
+  --tile-present: #b59f3b;
+  --tile-absent:  #3a3a3c;
+
+  --key-bg: #818384;
+  --key-text: #ffffff;
+  --key-correct: #538d4e;
+  --key-present: #b59f3b;
+  --key-absent:  #3a3a3c;
+
+  --tile-unplayed: #3a3a3c;
+  --tile-unplayed-hover: #4a4a4e;
 }
 
 html, body {
@@ -717,7 +744,7 @@ header {
 .conn-tile {
   aspect-ratio: 1.4 / 1;
   border-radius: 8px;
-  background: #efefe6;
+  background: var(--tile-unplayed);
   border: none;
   cursor: pointer;
   display: flex;
@@ -738,7 +765,7 @@ header {
   line-height: 1.2;
 }
 
-.conn-tile:hover  { background: #ddddd4; }
+.conn-tile:hover  { background: var(--tile-unplayed-hover); }
 .conn-tile.selected { background: #5a594e; color: #ffffff; }
 
 .conn-tile.shake {
@@ -1208,7 +1235,7 @@ header {
 :root {
   --waffle-green: #6aaa64;
   --waffle-yellow: #c9b458;
-  --waffle-white: #efefe6;
+  --waffle-white: var(--tile-unplayed);
   --waffle-cell-size: 58px;
   --waffle-gap: 6px;
 }
