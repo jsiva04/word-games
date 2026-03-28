@@ -1102,6 +1102,10 @@ header {
   color: var(--text-muted);
   text-transform: uppercase;
   flex-shrink: 0;
+  overflow: visible;
+  white-space: nowrap;
+  text-align: right;
+  transform: translateX(-12px);
 }
 
 .sq-input-tile {
