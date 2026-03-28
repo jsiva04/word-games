@@ -285,8 +285,8 @@ header {
 
 .key {
   height: 58px;
-  min-width: 43px;
-  padding: 0 8px;
+  min-width: 0;
+  padding: 0 4px;
   border: none;
   border-radius: 4px;
   background: var(--key-bg);
@@ -572,10 +572,15 @@ header {
   .key  { height: 50px; }
 }
 
+@media (max-width: 480px) {
+  .key-row { gap: 5px; }
+  .keyboard { gap: 6px; }
+}
+
 @media (max-width: 360px) {
   :root { --tile-size: 52px; }
-  .key  { min-width: 30px; height: 52px; font-size: 0.7rem; }
-  .key.wide { max-width: 54px; }
+  .key  { height: 52px; font-size: 0.7rem; }
+  .key-row { gap: 4px; }
 }
 
 /* ─── Nav Drawer ────────────────────────────────────── */
