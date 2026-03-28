@@ -13,6 +13,13 @@ const GAMES = [
   { id: 'waffle', name: 'Waffle', href: '/waffle' },
 ];
 
+const ARCADE_GAMES = [
+  { id: 'wordle', name: 'Wordle', href: '/arcade/wordle' },
+  { id: 'connections', name: 'Connections', href: '/arcade/connections' },
+  { id: 'squareword', name: 'Squareword', href: '/arcade/squareword' },
+  { id: 'waffle', name: 'Waffle', href: '/arcade/waffle' },
+];
+
 function WordleIcon() {
   return (
     <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
@@ -189,6 +196,23 @@ export function NavDrawer({ open, onOpen, onClose }: NavDrawerProps) {
               );
             })}
           </nav>
+          <div className="nav-section">
+            <span className="nav-section-label">Arcade</span>
+            {ARCADE_GAMES.map((game) => {
+              const isActive = pathname === game.href;
+              return (
+                <Link
+                  key={game.href}
+                  href={game.href}
+                  className={`nav-item${isActive ? ' nav-item--active' : ''}`}
+                  onClick={onClose}
+                >
+                  <span className="nav-item-icon">{icons[game.id]}</span>
+                  <span className="nav-item-name">{game.name}</span>
+                </Link>
+              );
+            })}
+          </div>
           <div className="nav-share">
             <button className={`nav-share-btn${copied ? ' copied' : ''}`} onClick={handleShareAll}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

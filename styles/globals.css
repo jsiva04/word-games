@@ -713,6 +713,87 @@ header {
   color: #fff;
 }
 
+/* ─── Nav Arcade Section ────────────────────────────── */
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px 8px;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.nav-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 10px 6px 4px;
+}
+
+/* ─── Arcade Result Modal ────────────────────────────── */
+.arcade-result-content {
+  padding: 4px 0;
+}
+
+.arcade-result-message {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 12px 0;
+}
+
+.arcade-emoji-grid {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: center;
+  margin: 4px 0 12px;
+}
+
+.arcade-emoji-row {
+  display: block;
+  letter-spacing: 2px;
+}
+
+.arcade-result-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.arcade-btn-outline {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.arcade-btn-outline:hover { background: var(--surface); }
+
+.arcade-btn-next {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background: var(--tile-correct);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.arcade-btn-next:hover { filter: brightness(1.08); }
+.arcade-btn-next:active { filter: brightness(0.92); }
+
 /* ─── Connections Board ──────────────────────────────── */
 .conn-game {
   flex: 1;
