@@ -172,7 +172,9 @@ export function getColumnHints(
     // All 6 words have the same letter at this col?
     const letters = new Set(puzzle.words.map((w) => w[col].toUpperCase()));
     if (letters.size === 1) {
-      hints[col] = [...letters][0];
+      const letter = Array.from(letters)[0];
+      const revealed = guesses.some((g) => g[col]?.toUpperCase() === letter);
+      if (revealed) hints[col] = letter;
     }
   }
   return hints;
