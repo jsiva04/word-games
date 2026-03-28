@@ -11,11 +11,11 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
   return (
     <Modal open={open} onClose={onClose} title="How to Play">
       <div className="help-section">
-        <p>Solve <strong>5 words</strong> simultaneously using shared guesses.</p>
+        <p>Solve <strong>6 words</strong> simultaneously using shared guesses.</p>
 
         <div className="divider" />
 
-        <p>Each guess is a valid 5-letter word. It&apos;s evaluated against <em>all 5</em> target words at once.</p>
+        <p>Each guess is a valid 5-letter word. It&apos;s evaluated against <em>all 6</em> target words at once.</p>
 
         <div className="help-examples">
           <div className="help-example">
@@ -35,7 +35,7 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
         <div className="divider" />
 
         <p>Solved words are shown with their letters revealed in green.</p>
-        <p>You have <strong>9 guesses</strong> to solve all 5 words.</p>
+        <p>Keep guessing until all 6 words are solved — there&apos;s no guess limit.</p>
 
         <div className="divider" />
 

@@ -9,7 +9,8 @@ interface SquarewordBoardProps {
   currentGuess: string;
   wordSolved: boolean[];
   bestStates: TileState[][] | null;
-  gameOver: boolean;
+  presentLetters: string[][];
+  onViewGuesses: () => void;
 }
 
 const STATE_COLORS: Record<TileState, string> = {
@@ -25,7 +26,8 @@ export function SquarewordBoard({
   currentGuess,
   wordSolved,
   bestStates,
-  gameOver,
+  presentLetters,
+  onViewGuesses,
 }: SquarewordBoardProps) {
   return (
     <div className="sq-board">
@@ -39,7 +41,6 @@ export function SquarewordBoard({
             <div className="sq-tiles">
               {Array.from({ length: 5 }, (_, i) => {
                 const state = states[i];
-                const isCurrentInput = !solved && !gameOver;
                 const letter =
                   solved
                     ? word[i].toUpperCase()
@@ -59,6 +60,17 @@ export function SquarewordBoard({
                 );
               })}
             </div>
+
+            {wordIdx === 0 ? (
+              <button className="sq-word-info sq-word-info-count" onClick={onViewGuesses}>
+                <span className="sq-info-num">{guesses.length}</span>
+                <span className="sq-info-label">VIEW</span>
+              </button>
+            ) : (
+              <div className="sq-word-info sq-word-info-present">
+                {(presentLetters[wordIdx] ?? []).join('')}
+              </div>
+            )}
           </div>
         );
       })}
@@ -76,11 +88,7 @@ export function SquarewordBoard({
             );
           })}
         </div>
-      </div>
-
-      {/* Guess counter */}
-      <div className="sq-guess-counter">
-        {guesses.length} / 9 guesses used
+        <div className="sq-word-info sq-word-info-spacer" />
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 import { VALID_SQUAREWORD_PUZZLES, SquarewordPuzzle, SQUAREWORD_EPOCH } from '@/data/squareword';
 
-export const MAX_GUESSES = 9;
 export const WORD_LENGTH = 5;
-export const NUM_WORDS = 5;
+export const NUM_WORDS = 6;
 
 export type TileState = 'correct' | 'present' | 'absent' | 'empty';
 
@@ -56,7 +55,7 @@ export function loadState(): SquarewordState | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const saved = JSON.parse(raw) as SquarewordState;
-    if (saved.dayIndex === getTodayIndex()) return saved;
+    if (saved.dayIndex === getTodayIndex() && saved.puzzle.words.length === NUM_WORDS) return saved;
   } catch {}
   return null;
 }
@@ -123,7 +122,7 @@ export function evaluateGuess(guess: string, target: string): TileResult[] {
   return result;
 }
 
-// For each of the 5 target words, evaluate the guess
+// For each of the 6 target words, evaluate the guess
 export function evaluateGuessAll(
   guess: string,
   puzzle: SquarewordPuzzle
@@ -170,13 +169,27 @@ export function getColumnHints(
 ): (string | null)[] {
   const hints: (string | null)[] = Array(WORD_LENGTH).fill(null);
   for (let col = 0; col < WORD_LENGTH; col++) {
-    // All 5 words have the same letter at this col?
+    // All 6 words have the same letter at this col?
     const letters = new Set(puzzle.words.map((w) => w[col].toUpperCase()));
     if (letters.size === 1) {
       hints[col] = [...letters][0];
     }
   }
   return hints;
+}
+
+// For each word, collect letters that have been "present" (yellow) across all guesses
+export function getPresentLetters(puzzle: SquarewordPuzzle, guesses: string[]): string[][] {
+  return puzzle.words.map((word) => {
+    const present = new Set<string>();
+    for (const guess of guesses) {
+      const result = evaluateGuess(guess.toLowerCase(), word.toLowerCase());
+      for (const tile of result) {
+        if (tile.state === 'present') present.add(tile.letter.toUpperCase());
+      }
+    }
+    return Array.from(present);
+  });
 }
 
 export function areAllWordsSolved(

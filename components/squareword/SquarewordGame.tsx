@@ -7,6 +7,7 @@ import { Keyboard } from '@/components/wordle/Keyboard';
 import { SquarewordBoard } from './SquarewordBoard';
 import { HelpModal } from './HelpModal';
 import { StatsModal } from './StatsModal';
+import { GuessesModal } from './GuessesModal';
 import { useSquareword } from '@/hooks/useSquareword';
 import { useToast } from '@/hooks/useToast';
 
@@ -36,9 +37,11 @@ export function SquarewordGame() {
     state,
     wordSolved,
     bestStates,
+    presentLetters,
     keyStates,
     showStats,
     showHelp,
+    showGuesses,
     stats,
     handleKey,
     handleShare,
@@ -46,6 +49,8 @@ export function SquarewordGame() {
     closeStats,
     openHelp,
     closeHelp,
+    openGuesses,
+    closeGuesses,
     dayIndex,
   } = useSquareword(showToast);
 
@@ -79,7 +84,7 @@ export function SquarewordGame() {
           {state && (
             <>
               <p className="conn-instructions">
-                Solve 5 words &mdash; <span>#{dayIndex}</span>
+                <span>#{dayIndex}</span>
               </p>
               <SquarewordBoard
                 puzzle={state.puzzle}
@@ -87,7 +92,8 @@ export function SquarewordGame() {
                 currentGuess={state.currentGuess}
                 wordSolved={wordSolved}
                 bestStates={bestStates}
-                gameOver={state.gameOver}
+                presentLetters={presentLetters}
+                onViewGuesses={openGuesses}
               />
               <Keyboard keyStates={keyStates} onKey={handleKey} />
             </>
@@ -96,6 +102,7 @@ export function SquarewordGame() {
       </main>
 
       <HelpModal open={showHelp} onClose={closeHelp} />
+      <GuessesModal open={showGuesses} onClose={closeGuesses} guesses={state?.guesses ?? []} />
       <StatsModal
         open={showStats}
         onClose={closeStats}

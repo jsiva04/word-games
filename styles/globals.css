@@ -1101,7 +1101,6 @@ header {
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  text-align: right;
   flex-shrink: 0;
 }
 
@@ -1115,13 +1114,90 @@ header {
   animation: tile-pop 0.1s ease;
 }
 
-.sq-guess-counter {
-  text-align: center;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-weight: 600;
+.sq-word-info {
+  flex-shrink: 0;
+  width: 48px;
+  min-height: 44px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.sq-word-info-count {
+  background: #4a90d9;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  gap: 1px;
+}
+
+.sq-info-num {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.sq-info-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.sq-word-info-present {
+  background: var(--tile-present);
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 4px 3px;
+  gap: 1px;
+  align-content: center;
+  justify-content: center;
+}
+
+.sq-word-info-spacer {
+  background: transparent;
+}
+
+.sq-guesses-modal {
+  padding: 8px 0 4px;
+}
+
+.sq-guesses-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.sq-guesses-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.sq-guesses-row {
+  display: flex;
+  gap: 4px;
+}
+
+.sq-guesses-tile {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: var(--tile-absent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 /* ─── Waffle ─────────────────────────────────────────── */

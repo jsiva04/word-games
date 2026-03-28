@@ -11,10 +11,10 @@ import {
   areAllWordsSolved,
   isWordSolved,
   getBestStates,
+  getPresentLetters,
   loadStats,
   getTodayIndex,
   copyToClipboard,
-  MAX_GUESSES,
   WORD_LENGTH,
   SquarewordState,
   SquarewordStats,
@@ -25,6 +25,7 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
   const [state, setState] = useState<SquarewordState | null>(null);
   const [showStats, setShowStats] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showGuesses, setShowGuesses] = useState(false);
 
   useEffect(() => {
     const puzzle = getDailyPuzzle();
@@ -67,14 +68,12 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
 
         const newGuesses = [...state.guesses, guess];
         const won = areAllWordsSolved(state.puzzle, newGuesses);
-        const lost = !won && newGuesses.length >= MAX_GUESSES;
-        const gameOver = won || lost;
 
         const newState: SquarewordState = {
           ...state,
           guesses: newGuesses,
           currentGuess: '',
-          gameOver,
+          gameOver: won,
           won,
         };
 
@@ -86,12 +85,6 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
           setTimeout(() => {
             showToast('Solved!', 2000);
             setTimeout(() => setShowStats(true), 1000);
-          }, 300);
-        } else if (lost) {
-          recordResult(false);
-          setTimeout(() => {
-            showToast(state.puzzle.words.join(' · '), 4000);
-            setTimeout(() => setShowStats(true), 2000);
           }, 300);
         }
         return;
@@ -109,10 +102,7 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
   const handleShare = useCallback(async () => {
     if (!state) return;
     const dayNum = getTodayIndex();
-    const solvedWords = state.puzzle.words.filter((_, i) =>
-      isWordSolved(i, state.guesses, state.puzzle)
-    );
-    const text = `Squareword #${dayNum}\n${state.won ? solvedWords.length : 'X'}/5 words\n${state.guesses.length}/${MAX_GUESSES} guesses`;
+    const text = `Squareword #${dayNum}\n6/6 words\n${state.guesses.length} guesses`;
     try {
       await copyToClipboard(text);
       showToast('Copied to clipboard!');
@@ -123,9 +113,10 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
 
   const wordSolved = state
     ? state.puzzle.words.map((_, i) => isWordSolved(i, state.guesses, state.puzzle))
-    : Array(5).fill(false);
+    : Array(6).fill(false);
 
   const bestStates = state ? getBestStates(state.puzzle, state.guesses) : null;
+  const presentLetters = state ? getPresentLetters(state.puzzle, state.guesses) : [];
 
   const stats: SquarewordStats = loadStats();
 
@@ -151,9 +142,11 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
     state,
     wordSolved,
     bestStates,
+    presentLetters,
     keyStates,
     showStats,
     showHelp,
+    showGuesses,
     stats,
     handleKey,
     handleShare,
@@ -161,6 +154,8 @@ export function useSquareword(showToast: (msg: string, duration?: number) => voi
     closeStats: () => setShowStats(false),
     openHelp: () => setShowHelp(true),
     closeHelp: () => setShowHelp(false),
+    openGuesses: () => setShowGuesses(true),
+    closeGuesses: () => setShowGuesses(false),
     dayIndex: getTodayIndex(),
   };
 }
