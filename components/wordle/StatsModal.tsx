@@ -8,9 +8,18 @@ interface StatsModalProps {
   state: WordleState | null;
   stats: WordleStats;
   onShare: () => void;
+  hardMode: boolean;
+  onToggleHardMode: () => void;
 }
 
-export function StatsModal({ open, onClose, state, stats, onShare }: StatsModalProps) {
+function formatTime(seconds: number): string {
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+export function StatsModal({ open, onClose, state, stats, onShare, hardMode, onToggleHardMode }: StatsModalProps) {
   const winPct = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
   const maxVal = Math.max(...stats.distribution, 1);
 
@@ -34,6 +43,20 @@ export function StatsModal({ open, onClose, state, stats, onShare }: StatsModalP
           <div className="stat-label">Max Streak</div>
         </div>
       </div>
+      {stats.bestTime !== undefined && (
+        <div className="solve-times">
+          <div className="stat-item">
+            <div className="stat-value stat-value--sm">{formatTime(stats.bestTime)}</div>
+            <div className="stat-label">Best Time</div>
+          </div>
+          {stats.lastTime !== undefined && (
+            <div className="stat-item">
+              <div className="stat-value stat-value--sm">{formatTime(stats.lastTime)}</div>
+              <div className="stat-label">Last Time</div>
+            </div>
+          )}
+        </div>
+      )}
       <div className="divider" />
       <div className="guess-distribution">
         <div className="dist-label">Guess Distribution</div>
@@ -55,6 +78,19 @@ export function StatsModal({ open, onClose, state, stats, onShare }: StatsModalP
             </div>
           );
         })}
+      </div>
+      <div className="divider" />
+      <div className="settings-row">
+        <div className="settings-row-info">
+          <span className="settings-row-label">Hard Mode</span>
+          <span className="settings-row-desc">Revealed hints must be used in future guesses</span>
+        </div>
+        <button
+          className={`toggle${hardMode ? ' on' : ''}`}
+          onClick={onToggleHardMode}
+          aria-pressed={hardMode}
+          aria-label="Toggle hard mode"
+        />
       </div>
       {state?.gameOver && (
         <>

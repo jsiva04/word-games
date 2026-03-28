@@ -28,6 +28,8 @@ export interface WordleStats {
   streak: number;
   maxStreak: number;
   distribution: number[];
+  bestTime?: number;
+  lastTime?: number;
 }
 
 const STORAGE_KEY = 'wordleState';
@@ -88,7 +90,7 @@ export function saveStats(stats: WordleStats): void {
   localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 }
 
-export function recordResult(won: boolean, guessCount: number): WordleStats {
+export function recordResult(won: boolean, guessCount: number, solveTime?: number): WordleStats {
   const stats = loadStats();
   stats.played++;
   if (won) {
@@ -96,11 +98,59 @@ export function recordResult(won: boolean, guessCount: number): WordleStats {
     stats.streak++;
     stats.maxStreak = Math.max(stats.maxStreak, stats.streak);
     stats.distribution[guessCount - 1]++;
+    if (solveTime !== undefined) {
+      stats.lastTime = solveTime;
+      if (stats.bestTime === undefined || solveTime < stats.bestTime) {
+        stats.bestTime = solveTime;
+      }
+    }
   } else {
     stats.streak = 0;
   }
   saveStats(stats);
   return stats;
+}
+
+const HARD_MODE_KEY = 'wordleHardMode';
+
+export function loadHardMode(): boolean {
+  try {
+    return localStorage.getItem(HARD_MODE_KEY) === 'true';
+  } catch { return false; }
+}
+
+export function saveHardMode(val: boolean): void {
+  try {
+    localStorage.setItem(HARD_MODE_KEY, String(val));
+  } catch {}
+}
+
+function ordinalSuffix(n: number): string {
+  if (n === 1) return 'st';
+  if (n === 2) return 'nd';
+  if (n === 3) return 'rd';
+  return 'th';
+}
+
+export function validateHardMode(
+  guess: string,
+  previousGuesses: string[],
+  answer: string,
+): string | null {
+  for (const prev of previousGuesses) {
+    const results = evaluateGuess(prev, answer);
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      if (results[i].state === 'correct' && guess[i] !== prev[i]) {
+        return `${i + 1}${ordinalSuffix(i + 1)} letter must be ${prev[i].toUpperCase()}`;
+      }
+    }
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      if (results[i].state === 'present' && !guess.includes(prev[i])) {
+        return `Guess must contain ${prev[i].toUpperCase()}`;
+      }
+    }
+  }
+  return null;
 }
 
 export function evaluateGuess(guess: string, answer: string): TileResult[] {

@@ -9,8 +9,11 @@ import {
   recordResult,
   evaluateGuess,
   isValidWord,
+  validateHardMode,
   buildShareText,
   copyToClipboard,
+  loadHardMode,
+  saveHardMode,
   WordleState,
   WordleStats,
   loadStats,
@@ -34,7 +37,9 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
   const [bouncingRow, setBouncingRow] = useState<number | null>(null);
   const [showStats, setShowStats] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [hardMode, setHardModeState] = useState(false);
   const animatingRef = useRef(false);
+  const startTimeRef = useRef<number | null>(null);
 
   // Init on mount
   useEffect(() => {
@@ -56,6 +61,7 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
     }
     setKeyStates(keys);
     setState(initial);
+    setHardModeState(loadHardMode());
 
     if (initial.gameOver) {
       setTimeout(() => setShowStats(true), 500);
@@ -95,6 +101,20 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
       return;
     }
 
+    if (hardMode && state.guesses.length > 0) {
+      const hardError = validateHardMode(guess, state.guesses, state.word);
+      if (hardError) {
+        showToast(hardError);
+        setShakingRow(state.guesses.length);
+        setTimeout(() => setShakingRow(null), 600);
+        return;
+      }
+    }
+
+    if (startTimeRef.current === null) {
+      startTimeRef.current = Date.now();
+    }
+
     const rowIdx = state.guesses.length;
     const newGuesses = [...state.guesses, guess];
     const newState: WordleState = { ...state, guesses: newGuesses, currentGuess: '' };
@@ -116,7 +136,10 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
         const finalState = { ...newState, gameOver: true, won: true };
         saveState(finalState);
         setState(finalState);
-        recordResult(true, newGuesses.length);
+        const solveTime = startTimeRef.current !== null
+          ? Math.round((Date.now() - startTimeRef.current) / 1000)
+          : undefined;
+        recordResult(true, newGuesses.length, solveTime);
         setBouncingRow(rowIdx);
         const msg = WIN_MESSAGES[Math.min(newGuesses.length - 1, WIN_MESSAGES.length - 1)];
         setTimeout(() => {
@@ -167,6 +190,18 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
     }
   }, [state, showToast]);
 
+  const toggleHardMode = useCallback(() => {
+    if (state && state.guesses.length > 0) {
+      showToast('Hard mode can only be enabled at the start of a game');
+      return;
+    }
+    setHardModeState((prev) => {
+      const next = !prev;
+      saveHardMode(next);
+      return next;
+    });
+  }, [state, showToast]);
+
   const stats: WordleStats = loadStats();
 
   return {
@@ -177,9 +212,11 @@ export function useWordle(showToast: (msg: string, duration?: number) => void) {
     bouncingRow,
     showStats,
     showHelp,
+    hardMode,
     stats,
     handleKey,
     handleShare,
+    toggleHardMode,
     openStats: () => setShowStats(true),
     closeStats: () => setShowStats(false),
     openHelp: () => setShowHelp(true),

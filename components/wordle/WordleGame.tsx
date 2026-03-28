@@ -40,9 +40,11 @@ export function WordleGame() {
     bouncingRow,
     showStats,
     showHelp,
+    hardMode,
     stats,
     handleKey,
     handleShare,
+    toggleHardMode,
     openStats,
     closeStats,
     openHelp,
@@ -61,6 +63,14 @@ export function WordleGame() {
 
   const headerButtons = (
     <>
+      <button
+        className={`hard-mode-btn${hardMode ? ' active' : ''}`}
+        onClick={toggleHardMode}
+        aria-label={hardMode ? 'Hard mode on' : 'Hard mode off'}
+        title={hardMode ? 'Hard Mode: ON' : 'Hard Mode: OFF'}
+      >
+        HARD
+      </button>
       <button className="icon-btn" onClick={openHelp} aria-label="How to play">
         <HelpIcon />
       </button>
@@ -100,6 +110,8 @@ export function WordleGame() {
         state={state}
         stats={stats}
         onShare={handleShare}
+        hardMode={hardMode}
+        onToggleHardMode={toggleHardMode}
       />
     </>
   );

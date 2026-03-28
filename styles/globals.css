@@ -565,6 +565,103 @@ header {
 .share-btn:hover  { filter: brightness(1.08); }
 .share-btn:active { filter: brightness(0.92); }
 
+/* ─── Hard Mode Button (header) ─────────────────────── */
+.hard-mode-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-family: var(--font);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  line-height: 1.4;
+}
+
+.hard-mode-btn:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.hard-mode-btn.active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+/* ─── Solve Times (stats modal) ─────────────────────── */
+.solve-times {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.stat-value--sm {
+  font-size: 1.5rem;
+}
+
+/* ─── Settings Row (stats modal) ────────────────────── */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.settings-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settings-row-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.settings-row-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Toggle switch */
+.toggle {
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--border);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle.on {
+  background: var(--tile-correct);
+}
+
+.toggle.on::after {
+  transform: translateX(20px);
+}
+
 /* ─── Responsive ────────────────────────────────────── */
 @media (max-height: 680px) {
   :root { --tile-size: 52px; --header-height: 44px; }

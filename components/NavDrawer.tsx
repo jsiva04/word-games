@@ -8,7 +8,7 @@ import { buildAllShareText } from '@/lib/shareAll';
 const GAMES = [
   { id: 'wordle', name: 'Wordle', href: '/wordle' },
   { id: 'connections', name: 'Connections', href: '/connections' },
-  // { id: 'strands', name: 'Strands', href: '/strands' },
+  { id: 'strands', name: 'Strands', href: '/strands' },
   { id: 'squareword', name: 'Squareword', href: '/squareword' },
   { id: 'waffle', name: 'Waffle', href: '/waffle' },
 ];
