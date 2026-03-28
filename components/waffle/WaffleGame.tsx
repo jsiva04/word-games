@@ -68,7 +68,7 @@ export function WaffleGame() {
           {state && colors && (
             <>
               <p className="conn-instructions">
-                Swap letters to form 6 words &mdash; <span>#{dayIndex}</span>
+                <span>#{dayIndex}</span>
               </p>
               <WaffleBoard
                 puzzle={puzzle}

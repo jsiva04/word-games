@@ -73,7 +73,7 @@ export function ConnectionsGame() {
       <main className="view active">
         <div className="conn-game">
           <p className="conn-instructions">
-            Create four groups of four &mdash; <span>#{puzzleIndex}</span>
+            <span>#{puzzleIndex}</span>
           </p>
 
           {state && puzzle && (
